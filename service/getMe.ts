@@ -1,0 +1,34 @@
+"use server";
+
+import { cookies } from "next/headers";
+
+export const getMe = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+  // const refreshToken = cookieStore.get("refreshToken")
+
+  if (!accessToken) {
+    // throw new Error("User Not Logged In!")
+    return {
+      success: false,
+      message: "User Not Logged In!",
+    };
+  }
+
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/me`, {
+    headers: {
+      // Authorization: accessToken as unknown as string,
+      Authorization: `Bearer ${accessToken}`,
+      // Authorization: `${accessToken}`,
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 24,
+      tags: ["my-profile"],
+    },
+  });
+  // console.log(res)
+  const result = res.json();
+  return result;
+};
