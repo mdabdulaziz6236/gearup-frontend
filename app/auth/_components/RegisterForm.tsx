@@ -18,7 +18,7 @@ function RegisterForm() {
     if (state.success) {
       toast.success(state.message || "Registration successful!");
       setTimeout(() => {
-        router.push("/login");
+        router.push("/auth/login");
       }, 1500);
     } else {
       toast.error(state.message || "Registration failed!");
@@ -78,7 +78,7 @@ function RegisterForm() {
       <div className="text-center text-sm text-muted-foreground mt-2">
         <span>Already have an account? </span>
         <Link
-          href="/login"
+          href="/auth/login"
           className="text-primary hover:underline font-medium"
         >
           Login here
