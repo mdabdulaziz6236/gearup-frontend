@@ -1,10 +1,16 @@
-export default function PublicLayout({
+import { Navbar } from "@/components/shared/navbar";
+import { getMe } from "@/service/getMe";
+
+export default async function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <section>
-    
-    {children}
-    </section>;
+  const user = await getMe()
+  return <>
+<Navbar user={user}></Navbar>
+  {children}
+  
+  </>
+
 }
