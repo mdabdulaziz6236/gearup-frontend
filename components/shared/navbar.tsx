@@ -13,7 +13,7 @@ import {
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback,  } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,9 +24,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Fragment } from "react";
+import { Fragment, } from "react";
 import { toast } from "sonner";
 import { ModeToggle } from "../theme/toggleButton";
+import { logout } from "@/service/logout";
 
 const navLinks = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -55,30 +56,21 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
-  // const [isLogout, setIsLogout] = useState(false);
 
   const handleUserMenuAction = async (action: string, e: React.MouseEvent) => {
     if (action === "Log out") {
       e.preventDefault();
 
       try {
-        // await logout();
+        await logout();
         toast.success("User Logged Out Successfully");
-        router.push("/login");
+        router.push("/");
         router.refresh();
-        // setIsLogout(true);
       } catch (error) {
         console.error("Logout failed:", error);
       }
     }
   };
-  // useEffect(() => {
-  //   if (isLogout) {
-  //     toast.success("User Logged Out Successfully");
-  //     router.push("/login");
-  //     router.refresh();
-  //   }
-  // }, [isLogout]);
   return (
     <header className="border-b">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
