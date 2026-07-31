@@ -53,3 +53,81 @@ export async function createRental(payload: {
 
   return result;
 }
+
+export async function getMyRentals() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/rentals`, {
+    headers: {
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error("Failed to fetch rentals");
+  const result = await res.json();
+
+  return result;
+}
+
+export async function initiatePayment(
+  payload: { rentalOrderId: string },
+) {
+    const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  console.log(payload)
+  const res = await fetch(`${API_BASE_URL}/api/payments/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+
+  const result = await res.json();
+  if (!res.ok) throw new Error(result.message || "Payment initiation failed");
+
+  return result;
+}
+
+
+
+export async function confirmPayment(payload: { transactionId: string }) {
+      const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/payments/confirm`, {
+    method: "POST",
+    headers: {
+     "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Payment verification failed");
+  return data;
+}

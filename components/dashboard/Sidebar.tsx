@@ -46,7 +46,7 @@ const MENU_ITEMS: Record<
     },
     {
       name: "My Rentals",
-      href: "/dashboard/customer/rentals",
+      href: "/dashboard/customer/orders",
       icon: ClipboardList,
     },
     {
