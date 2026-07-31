@@ -77,10 +77,8 @@ export async function getMyRentals() {
   return result;
 }
 
-export async function initiatePayment(
-  payload: { rentalOrderId: string },
-) {
-    const cookieStore = await cookies();
+export async function initiatePayment(payload: { rentalOrderId: string }) {
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
   if (!accessToken) {
@@ -89,7 +87,7 @@ export async function initiatePayment(
       message: "User not logged in!",
     };
   }
-  console.log(payload)
+  console.log(payload);
   const res = await fetch(`${API_BASE_URL}/api/payments/create`, {
     method: "POST",
     headers: {
@@ -99,17 +97,14 @@ export async function initiatePayment(
     body: JSON.stringify(payload),
   });
 
-
   const result = await res.json();
   if (!res.ok) throw new Error(result.message || "Payment initiation failed");
 
   return result;
 }
 
-
-
 export async function confirmPayment(payload: { transactionId: string }) {
-      const cookieStore = await cookies();
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
   if (!accessToken) {
@@ -121,13 +116,61 @@ export async function confirmPayment(payload: { transactionId: string }) {
   const res = await fetch(`${API_BASE_URL}/api/payments/confirm`, {
     method: "POST",
     headers: {
-     "Content-Type": "application/json",
+      "Content-Type": "application/json",
       Cookie: `accessToken=${accessToken}`,
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
 
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Payment verification failed");
   return data;
+}
+
+export async function getMyPayments() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/payments`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+      cache: "no-store",
+    },
+  );
+  if (!res.ok) throw new Error("Failed to fetch payments");
+  return await res.json();
+}
+
+export async function getPaymentDetails(id: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/payments/${id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+      cache: "no-store",
+    },
+  );
+  if (!res.ok) throw new Error("Failed to fetch payment details");
+  return await res.json();
 }
