@@ -1,8 +1,10 @@
-const API_BASE_URL = process.env.BACKEND_API_URL
+"use server";
+import { cookies } from "next/headers";
+const API_BASE_URL = process.env.BACKEND_API_URL;
 
 export async function getAllGears() {
   const res = await fetch(`${API_BASE_URL}/api/gear`, {
-    cache: "no-store", 
+    cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch gears");
   return res.json();
@@ -22,4 +24,32 @@ export async function getSingleGear(id: string) {
   });
   if (!res.ok) return null;
   return res.json();
+}
+
+export async function createRental(payload: {
+  gearId: string;
+  startDate: string;
+  endDate: string;
+}) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/rentals`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await res.json();
+
+  return result;
 }

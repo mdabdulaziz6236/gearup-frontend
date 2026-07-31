@@ -7,18 +7,20 @@ import { loginAction } from "../_actions/authActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function LoginForm() {
   const [state, action, pending] = useActionState(loginAction, false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/dashboard";
   useEffect(() => {
     if (!state) return;
 
     if (state.success) {
       toast.success(state.message || "Login Successfully");
       setTimeout(() => {
-        router.push("/");
+        router.push(redirectUrl);
       }, 1500);
     }
     if (!state.success) {

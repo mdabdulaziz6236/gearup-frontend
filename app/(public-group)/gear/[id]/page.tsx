@@ -1,9 +1,8 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ShieldCheck, CheckCircle2, Calendar } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ArrowLeft, CheckCircle2 } from "lucide-react"
 import { getSingleGear } from "@/service/api"
-
+import RentAction from "./RentAction"
 
 interface SingleGearPageProps {
   params: Promise<{ id: string }>
@@ -14,7 +13,6 @@ export default async function SingleGearPage({ params }: SingleGearPageProps) {
   const resolvedParams = await params;
   const gearId = resolvedParams.id;
 
-
   const response = await getSingleGear(gearId);
   const gear = response?.data;
 
@@ -24,9 +22,8 @@ export default async function SingleGearPage({ params }: SingleGearPageProps) {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 py-8">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4 max-w-7xl">
         
-        {/* Back Button */}
         <Link href="/gear" className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400 mb-8 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to all gear
         </Link>
@@ -74,7 +71,6 @@ export default async function SingleGearPage({ params }: SingleGearPageProps) {
               {gear.description}
             </p>
 
-            {/* Specifications Box */}
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-8 shadow-sm">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-4 text-lg">Key Specifications</h3>
               <ul className="space-y-3">
@@ -89,23 +85,13 @@ export default async function SingleGearPage({ params }: SingleGearPageProps) {
               </ul>
             </div>
 
-            {/* Rent Action Section */}
-            <div className="mt-auto space-y-4 bg-slate-100 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
-              <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400 mb-2">
-                <Calendar className="h-5 w-5 text-emerald-600" />
-                Select dates on the next checkout step.
-              </div>
-              <Button 
-                size="lg" 
-                className="w-full h-14 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg shadow-lg shadow-emerald-600/20"
-                disabled={!gear.isAvailable || gear.stockQuantity === 0}
-              >
-                Rent Now
-              </Button>
-              <div className="flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-4">
-                <ShieldCheck className="h-4 w-4" /> Secure payment & verified providers
-              </div>
-            </div>
+            {/* 2. RentAction component*/}
+            <RentAction 
+              gearId={gear.id} 
+              dailyPrice={gear.dailyPrice} 
+              isAvailable={gear.isAvailable}
+              stockQuantity={gear.stockQuantity}
+            />
 
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { getAllGears, getCategories } from "@/service/api"
 import GearClient from "./GearClient"
+import { getMe } from "@/service/getMe";
 
 export default async function GearListingPage() {
 
@@ -7,6 +8,7 @@ export default async function GearListingPage() {
     getAllGears(),
     getCategories()
   ]);
+  const user = await getMe();
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
@@ -23,7 +25,7 @@ export default async function GearListingPage() {
         </div>
         
         {/* Client Component  where searching filtering pagination */}
-        <GearClient 
+        <GearClient user={user}
           initialGears={gearsRes.data || []} 
           categories={categoriesRes.data || []} 
         />
