@@ -36,27 +36,27 @@ const MENU_ITEMS: Record<
   CUSTOMER: [
     {
       name: "Dashboard",
-      href: "/dashboard",
+      href: "/dashboard/customer",
       icon: LayoutDashboard,
     },
     {
       name: "Browse Gear",
-      href: "/dashboard/gear",
+      href: "/gear",
       icon: ShoppingBag,
     },
     {
       name: "My Rentals",
-      href: "/dashboard/rentals",
+      href: "/dashboard/customer/rentals",
       icon: ClipboardList,
     },
     {
       name: "Payments",
-      href: "/dashboard/payments",
+      href: "/dashboard/customer/payments",
       icon: CreditCard,
     },
     {
       name: "Reviews",
-      href: "/dashboard/reviews",
+      href: "/dashboard/customer/reviews",
       icon: Star,
     },
   ],
