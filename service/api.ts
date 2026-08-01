@@ -265,7 +265,6 @@ export async function getMyReviews() {
   return data;
 }
 
-
 export async function createGear(payload: {
   categoryName: string;
   title: string;
@@ -289,17 +288,16 @@ export async function createGear(payload: {
       "Content-Type": "application/json",
       Cookie: `accessToken=${accessToken}`,
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
-  
+
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to create gear");
   return data;
 }
 
-
 export async function getProviderGears() {
-const cookieStore = await cookies();
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
   if (!accessToken) {
@@ -322,9 +320,7 @@ const cookieStore = await cookies();
   return data;
 }
 
-
 export async function getProviderOrders() {
-
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
@@ -335,22 +331,19 @@ export async function getProviderOrders() {
     };
   }
 
-  
   const res = await fetch(`${API_BASE_URL}/api/provider/orders`, {
-     headers: {
+    headers: {
       "Content-Type": "application/json",
       Cookie: `accessToken=${accessToken}`,
     },
-    cache: "no-store"
-    
+    cache: "no-store",
   });
-  
+
   const data = await res.json();
-  console.log(data)
+  console.log(data);
   if (!res.ok) throw new Error(data.message || "Failed to fetch orders");
   return data;
 }
-
 
 export async function updateOrderStatus(orderId: string, status: string) {
   const cookieStore = await cookies();
@@ -363,24 +356,22 @@ export async function updateOrderStatus(orderId: string, status: string) {
     };
   }
 
-  
   const res = await fetch(`${API_BASE_URL}/api/rentals/${orderId}/status`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-       Cookie: `accessToken=${accessToken}`,
+      Cookie: `accessToken=${accessToken}`,
     },
-    body: JSON.stringify({ status })
+    body: JSON.stringify({ status }),
   });
-  
+
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to update order status");
   return data;
 }
 
-
 export async function getProviderDashboardStats() {
-    const cookieStore = await cookies();
+  const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
   if (!accessToken) {
@@ -390,16 +381,44 @@ export async function getProviderDashboardStats() {
     };
   }
 
-  
   const res = await fetch(`${API_BASE_URL}/api/provider/dashboard-stats`, {
-    headers:{
-       "Content-Type": "application/json",
-       Cookie: `accessToken=${accessToken}`,
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
     },
-    cache: "no-store"
+    cache: "no-store",
   });
-  
+
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Failed to fetch dashboard stats");
+  if (!res.ok)
+    throw new Error(data.message || "Failed to fetch dashboard stats");
+  return data;
+}
+
+
+// Admin Related apis
+
+
+export async function getAdminSystemStats() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/admin/stats`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch system stats");
   return data;
 }
