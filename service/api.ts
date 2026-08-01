@@ -379,3 +379,27 @@ export async function updateOrderStatus(orderId: string, status: string) {
 }
 
 
+export async function getProviderDashboardStats() {
+    const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  
+  const res = await fetch(`${API_BASE_URL}/api/provider/dashboard-stats`, {
+    headers:{
+       "Content-Type": "application/json",
+       Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store"
+  });
+  
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch dashboard stats");
+  return data;
+}
