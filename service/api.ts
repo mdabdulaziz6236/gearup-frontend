@@ -136,16 +136,13 @@ export async function getMyPayments() {
       message: "User not logged in!",
     };
   }
-  const res = await fetch(
-    `${API_BASE_URL}/api/payments`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}`,
-      },
-      cache: "no-store",
+  const res = await fetch(`${API_BASE_URL}/api/payments`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
     },
-  );
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error("Failed to fetch payments");
   return await res.json();
 }
@@ -160,21 +157,16 @@ export async function getPaymentDetails(id: string) {
       message: "User not logged in!",
     };
   }
-  const res = await fetch(
-    `${API_BASE_URL}/api/payments/${id}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}`,
-      },
-      cache: "no-store",
+  const res = await fetch(`${API_BASE_URL}/api/payments/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
     },
-  );
+    cache: "no-store",
+  });
   if (!res.ok) throw new Error("Failed to fetch payment details");
   return await res.json();
 }
-
-
 
 export async function getSingleRentalOrder(id: string) {
   const cookieStore = await cookies();
@@ -189,19 +181,20 @@ export async function getSingleRentalOrder(id: string) {
 
   const res = await fetch(`${API_BASE_URL}/api/rentals/${id}`, {
     headers: {
-       "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}`,
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
     },
-    cache: "no-store"
+    cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch order details");
   return await res.json();
 }
 
-
-export async function submitReview(
-  payload: { gearId: string; rating: number; comment: string }, 
-) {
+export async function submitReview(payload: {
+  gearId: string;
+  rating: number;
+  comment: string;
+}) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
 
@@ -212,20 +205,18 @@ export async function submitReview(
     };
   }
   const res = await fetch(`${API_BASE_URL}/api/reviews`, {
-
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}`,
+      Cookie: `accessToken=${accessToken}`,
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
-  
+
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to submit review");
   return data;
 }
-
 
 export async function getSingleReview(gearId: string) {
   const cookieStore = await cookies();
@@ -240,12 +231,36 @@ export async function getSingleReview(gearId: string) {
 
   const res = await fetch(`${API_BASE_URL}/api/reviews/${gearId}`, {
     headers: {
-       "Content-Type": "application/json",
-        Cookie: `accessToken=${accessToken}`,
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
     },
-    cache: "no-store"
+    cache: "no-store",
   });
   if (!res.ok) throw new Error("Failed to fetch order details");
-  const result = await res.json()
-  return result
+  const result = await res.json();
+  return result;
+}
+
+export async function getMyReviews() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/reviews`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch reviews");
+  return data;
 }
