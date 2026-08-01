@@ -210,7 +210,7 @@ export default function AddNewGearPage() {
             <Button 
               type="submit" 
               disabled={isLoading}
-              className="h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white min-w-[150px] transition-all"
+              className="h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white min-w-37.5 transition-all"
             >
               {isLoading ? (
                 <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>

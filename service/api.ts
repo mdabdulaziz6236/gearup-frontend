@@ -296,3 +296,28 @@ export async function createGear(payload: {
   if (!res.ok) throw new Error(data.message || "Failed to create gear");
   return data;
 }
+
+
+export async function getProviderGears() {
+const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/provider/my-gears`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch your gears");
+  return data;
+}
