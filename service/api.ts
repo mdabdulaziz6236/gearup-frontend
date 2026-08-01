@@ -395,9 +395,7 @@ export async function getProviderDashboardStats() {
   return data;
 }
 
-
 // Admin Related apis
-
 
 export async function getAdminSystemStats() {
   const cookieStore = await cookies();
@@ -421,4 +419,77 @@ export async function getAdminSystemStats() {
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to fetch system stats");
   return data;
+}
+
+export async function getAllAdminUsers() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/admin/users`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch users");
+  return data;
+}
+
+export async function updateAdminUserStatus(userId: string, status: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify({ status }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to update user status");
+  return data;
+}
+
+export async function deleteAdminUser(userId: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    method: "DELETE",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to delete user");
+  return data;
+
 }
