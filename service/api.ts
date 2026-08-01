@@ -87,7 +87,6 @@ export async function initiatePayment(payload: { rentalOrderId: string }) {
       message: "User not logged in!",
     };
   }
-  console.log(payload);
   const res = await fetch(`${API_BASE_URL}/api/payments/create`, {
     method: "POST",
     headers: {
@@ -173,4 +172,80 @@ export async function getPaymentDetails(id: string) {
   );
   if (!res.ok) throw new Error("Failed to fetch payment details");
   return await res.json();
+}
+
+
+
+export async function getSingleRentalOrder(id: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/rentals/${id}`, {
+    headers: {
+       "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store"
+  });
+  if (!res.ok) throw new Error("Failed to fetch order details");
+  return await res.json();
+}
+
+
+export async function submitReview(
+  payload: { gearId: string; rating: number; comment: string }, 
+) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/reviews`, {
+
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload)
+  });
+  
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to submit review");
+  return data;
+}
+
+
+export async function getSingleReview(gearId: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/reviews/${gearId}`, {
+    headers: {
+       "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store"
+  });
+  if (!res.ok) throw new Error("Failed to fetch order details");
+  const result = await res.json()
+  return result
 }

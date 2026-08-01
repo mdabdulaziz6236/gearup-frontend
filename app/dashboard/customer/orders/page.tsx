@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link"; 
 import { Package, Calendar, CreditCard, Loader2, ArrowRight, CheckCircle2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -37,7 +38,6 @@ export default function CustomerOrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      
       const res = await getMyRentals();
       setOrders(res.data);
     } catch (error) {
@@ -47,7 +47,6 @@ export default function CustomerOrdersPage() {
     }
   };
 
-
   const handlePayment = async (rentalOrderId: string) => {
     try {
       setPaymentLoading(rentalOrderId);
@@ -55,10 +54,8 @@ export default function CustomerOrdersPage() {
       const payload = { rentalOrderId };
       const response = await initiatePayment(payload);
 
-
       toast.success("Redirecting to payment gateway...");
       
-
       if (response?.data?.paymentUrl) {
         window.location.href = response.data.paymentUrl;
       }
@@ -150,27 +147,29 @@ export default function CustomerOrdersPage() {
                   </div>
                 </div>
 
-                {/* Footer: Action Button */}
-                {needsPayment && (
-                  <Button 
-                    onClick={() => handlePayment(order.id)}
-                    disabled={paymentLoading === order.id}
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl h-11"
-                  >
-                    {paymentLoading === order.id ? (
-                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</>
-                    ) : (
-                      <><CreditCard className="mr-2 h-4 w-4" /> Pay Now</>
-                    )}
-                  </Button>
-                )}
-                
-                {/* Optional: Show view details if already paid */}
-                {!needsPayment && (
-                  <Button variant="outline" className="w-full rounded-xl h-11 border-slate-200 dark:border-slate-800">
-                    View Receipt
-                  </Button>
-                )}
+                {/* Footer: Action Buttons */}
+                <div className="flex flex-col gap-3 mt-auto">
+                  {needsPayment ? (
+                    <Button 
+                      onClick={() => handlePayment(order.id)}
+                      disabled={paymentLoading === order.id}
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl h-11"
+                    >
+                      {paymentLoading === order.id ? (
+                        <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</>
+                      ) : (
+                        <><CreditCard className="mr-2 h-4 w-4" /> Pay Now</>
+                      )}
+                    </Button>
+                  ) : (
+                    //  Track Order Status Button 
+                    <Link href={`/dashboard/customer/orders/${order.id}`} className="w-full">
+                      <Button variant="outline" className="w-full rounded-xl h-11 border-slate-200 dark:border-slate-800 hover:bg-emerald-50 hover:text-emerald-700 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-400 transition-colors">
+                        Track Order Status
+                      </Button>
+                    </Link>
+                  )}
+                </div>
 
               </div>
             );
