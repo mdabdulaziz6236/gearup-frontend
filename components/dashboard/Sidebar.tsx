@@ -81,12 +81,7 @@ const MENU_ITEMS: Record<
       name: "Orders",
       href: "/dashboard/provider/orders",
       icon: ClipboardList,
-    },
-    {
-      name: "Payments",
-      href: "/dashboard/payments",
-      icon: CreditCard,
-    },
+    }
   ],
 
   ADMIN: [

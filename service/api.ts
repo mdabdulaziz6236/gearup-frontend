@@ -321,3 +321,61 @@ const cookieStore = await cookies();
   if (!res.ok) throw new Error(data.message || "Failed to fetch your gears");
   return data;
 }
+
+
+export async function getProviderOrders() {
+
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  
+  const res = await fetch(`${API_BASE_URL}/api/provider/orders`, {
+     headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store"
+    
+  });
+  
+  const data = await res.json();
+  console.log(data)
+  if (!res.ok) throw new Error(data.message || "Failed to fetch orders");
+  return data;
+}
+
+
+export async function updateOrderStatus(orderId: string, status: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  
+  const res = await fetch(`${API_BASE_URL}/api/rentals/${orderId}/status`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+       Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify({ status })
+  });
+  
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to update order status");
+  return data;
+}
+
+
