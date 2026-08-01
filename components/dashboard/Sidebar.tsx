@@ -141,9 +141,7 @@ export function Sidebar({ role }: SidebarProps) {
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 px-2 py-4">
         <Boxes className="size-6 text-primary" />
-        <span className="text-xl font-bold tracking-tight">
-          GearUp
-        </span>
+        <span className="text-xl font-bold tracking-tight">GearUp</span>
       </Link>
 
       {/* Main Menu */}
@@ -155,11 +153,10 @@ export function Sidebar({ role }: SidebarProps) {
         <nav className="space-y-1">
           {menus.map((item) => {
             const Icon = item.icon;
-
+            
             const isActive =
               pathname === item.href ||
-              (item.href !== "/dashboard" &&
-                pathname.startsWith(item.href));
+              (item.name !== "Dashboard" && pathname.startsWith(item.href));
 
             return (
               <Link key={item.href} href={item.href}>
@@ -168,7 +165,7 @@ export function Sidebar({ role }: SidebarProps) {
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all",
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   <Icon
@@ -176,7 +173,7 @@ export function Sidebar({ role }: SidebarProps) {
                       "h-5 w-5",
                       isActive
                         ? "text-primary-foreground"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   />
                   {item.name}
@@ -206,7 +203,7 @@ export function Sidebar({ role }: SidebarProps) {
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all",
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   <Icon
@@ -214,7 +211,7 @@ export function Sidebar({ role }: SidebarProps) {
                       "h-5 w-5",
                       isActive
                         ? "text-primary-foreground"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground",
                     )}
                   />
                   {item.name}
@@ -226,7 +223,12 @@ export function Sidebar({ role }: SidebarProps) {
       </div>
 
       {/* Logout */}
-      <button onClick={()=>{logout()}} className="mt-auto flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50">
+      <button
+        onClick={() => {
+          logout();
+        }}
+        className="mt-auto flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
+      >
         <LogOut className="h-5 w-5" />
         Logout
       </button>

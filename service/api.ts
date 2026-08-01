@@ -138,7 +138,7 @@ export async function getMyPayments() {
     };
   }
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/payments`,
+    `${API_BASE_URL}/api/payments`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -162,7 +162,7 @@ export async function getPaymentDetails(id: string) {
     };
   }
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/payments/${id}`,
+    `${API_BASE_URL}/api/payments/${id}`,
     {
       headers: {
         "Content-Type": "application/json",
