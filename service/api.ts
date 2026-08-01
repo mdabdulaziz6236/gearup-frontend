@@ -264,3 +264,35 @@ export async function getMyReviews() {
   if (!res.ok) throw new Error(data.message || "Failed to fetch reviews");
   return data;
 }
+
+
+export async function createGear(payload: {
+  categoryName: string;
+  title: string;
+  description: string;
+  brand: string;
+  dailyPrice: number;
+  stockQuantity: number;
+}) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/provider/gear`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload)
+  });
+  
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to create gear");
+  return data;
+}

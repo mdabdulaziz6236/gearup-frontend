@@ -64,7 +64,7 @@ const MENU_ITEMS: Record<
   PROVIDER: [
     {
       name: "Dashboard",
-      href: "/dashboard",
+      href: "/dashboard/provider",
       icon: LayoutDashboard,
     },
     {
@@ -92,7 +92,7 @@ const MENU_ITEMS: Record<
   ADMIN: [
     {
       name: "Dashboard",
-      href: "/dashboard",
+      href: "/dashboard/admin",
       icon: LayoutDashboard,
     },
     {
@@ -153,10 +153,15 @@ export function Sidebar({ role }: SidebarProps) {
         <nav className="space-y-1">
           {menus.map((item) => {
             const Icon = item.icon;
-            
+
             const isActive =
               pathname === item.href ||
-              (item.name !== "Dashboard" && pathname.startsWith(item.href));
+              (item.name !== "Dashboard" &&
+                pathname.startsWith(`${item.href}/`) &&
+                !menus.some(
+                  (menu) =>
+                    menu.href !== item.href && pathname.startsWith(menu.href),
+                ));
 
             return (
               <Link key={item.href} href={item.href}>
