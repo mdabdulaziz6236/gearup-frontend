@@ -493,7 +493,6 @@ export async function deleteAdminUser(userId: string) {
   return data;
 }
 
-
 export async function getAllAdminGears() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
@@ -557,5 +556,28 @@ export async function deleteAdminGear(id: string) {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to delete gear");
+  return data;
+}
+
+export async function getAllAdminRentals() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/rentals`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch rental orders");
   return data;
 }
