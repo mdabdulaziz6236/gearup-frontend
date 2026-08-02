@@ -97,7 +97,7 @@ const MENU_ITEMS: Record<
     },
     {
       name: "Gear Listings",
-      href: "/dashboard/admin/gear",
+      href: "/dashboard/admin/gears",
       icon: ShoppingBag,
     },
     {

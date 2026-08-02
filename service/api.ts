@@ -491,5 +491,71 @@ export async function deleteAdminUser(userId: string) {
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to delete user");
   return data;
+}
 
+
+export async function getAllAdminGears() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/gear`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch gears");
+  return data;
+}
+
+export async function getAdminGearById(id: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/gear/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch gear details");
+  return data;
+}
+
+export async function deleteAdminGear(id: string) {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/gear/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    method: "DELETE",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to delete gear");
+  return data;
 }
