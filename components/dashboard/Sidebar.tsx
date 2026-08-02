@@ -116,12 +116,12 @@ const MENU_ITEMS: Record<
 const GENERAL_MENU = [
   {
     name: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: Settings,
   },
   {
     name: "Help",
-    href: "/dashboard/help",
+    href: "/help",
     icon: HelpCircle,
   },
 ];
