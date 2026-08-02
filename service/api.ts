@@ -604,3 +604,4 @@ export async function getAllAdminPayments() {
   if (!res.ok) throw new Error(data.message || "Failed to fetch payments");
   return data;
 }
+
