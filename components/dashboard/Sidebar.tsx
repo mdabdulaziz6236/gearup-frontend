@@ -107,7 +107,7 @@ const MENU_ITEMS: Record<
     },
     {
       name: "Payments",
-      href: "/dashboard/payments",
+      href: "/dashboard/admin/payments",
       icon: CreditCard,
     },
   ],

@@ -581,3 +581,26 @@ export async function getAllAdminRentals() {
   if (!res.ok) throw new Error(data.message || "Failed to fetch rental orders");
   return data;
 }
+
+export async function getAllAdminPayments() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  const res = await fetch(`${API_BASE_URL}/api/admin/payments`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch payments");
+  return data;
+}
