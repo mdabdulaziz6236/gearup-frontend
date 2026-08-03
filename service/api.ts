@@ -680,3 +680,26 @@ export async function changeUserPassword(payload: any) {
   if (!res.ok) throw new Error(data.message || "Failed to change password");
   return data;
 }
+
+export async function getAllReviews() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+
+  const res = await fetch(`${API_BASE_URL}/api/reviews/all`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    }
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to change password");
+  return data;
+}
