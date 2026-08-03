@@ -28,7 +28,6 @@ export const getMe = async () => {
       tags: ["my-profile"],
     },
   });
-  // console.log(res)
   const result = res.json();
   return result;
 };

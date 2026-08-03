@@ -340,7 +340,6 @@ export async function getProviderOrders() {
   });
 
   const data = await res.json();
-  console.log(data);
   if (!res.ok) throw new Error(data.message || "Failed to fetch orders");
   return data;
 }

@@ -26,7 +26,7 @@ export const getNewAccessToken = async () => {
       cache: "no-cache",
     },
   );
-  // console.log(res)
+
   const result = await res.json();
   return result;
 };
