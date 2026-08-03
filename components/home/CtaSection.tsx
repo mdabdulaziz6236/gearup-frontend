@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function CtaSection() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-24">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
       <div className="bg-slate-900 dark:bg-slate-900 rounded-3xl p-10 md:p-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden">
         {/* Decorative Pattern */}
         <div className="absolute right-0 top-0 w-64 h-64 bg-indigo-500/20 blur-[80px] rounded-full"></div>

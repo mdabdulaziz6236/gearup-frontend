@@ -10,7 +10,7 @@ export default async function DashboardLayout({
     const user = await getMe()
 
   return (
-    <div className="flex min-h-screen w-full bg-slate-50">
+    <div className="flex min-h-screen w-full bg-slate-50 dark:bg-indigo-500/20">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block w-64 shrink-0 p-4">
         <Sidebar role={user?.data?.role} />
