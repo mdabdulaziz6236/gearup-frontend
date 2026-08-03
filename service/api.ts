@@ -320,6 +320,57 @@ export async function getProviderGears() {
   return data;
 }
 
+
+export const updateProviderGear = async (gearId: string, payload: any) => {
+    const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/provider/gear/${gearId}`, {
+      method: "PUT",
+      headers: {
+         "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    return await res.json();
+  } catch (error) {
+    throw new Error("Failed to update gear");
+  }
+};
+
+
+export const deleteProviderGear = async (gearId: string) => {
+      const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value || null;
+
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "User not logged in!",
+    };
+  }
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/provider/gear/${gearId}`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+      },
+    });
+    return await res.json();
+  } catch (error) {
+    throw new Error("Failed to delete gear");
+  }
+};
+
 export async function getProviderOrders() {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || null;
