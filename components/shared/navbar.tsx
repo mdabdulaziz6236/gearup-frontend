@@ -74,16 +74,10 @@ export function Navbar({ user }: NavbarProps) {
 
   const handleUserMenuAction = async (action: string, e: React.MouseEvent) => {
     if (action === "Log out") {
-      e.preventDefault();
-      try {
-        await logout();
-        toast.success("Logged out successfully");
-        router.push("/");
-        router.refresh();
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    }
+    e.preventDefault();
+
+    await logout()
+  }
   };
 
   return (

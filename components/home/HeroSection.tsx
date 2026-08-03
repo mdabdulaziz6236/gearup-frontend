@@ -28,7 +28,7 @@ export default function HeroSection() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/gears">
+          <Link href="/gear">
             <Button className="w-full sm:w-auto h-14 px-8 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold shadow-lg shadow-indigo-500/30 transition-all hover:scale-105">
               Browse Gears <Search className="ml-2 h-5 w-5" />
             </Button>

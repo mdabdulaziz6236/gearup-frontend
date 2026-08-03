@@ -15,7 +15,7 @@ export default function CtaSection() {
             Turn your unused cameras, lenses, and lighting equipment into passive income. Join thousands of creators on our platform.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/register?role=PROVIDER">
+            <Link href="/auth/register">
               <Button className="w-full sm:w-auto h-12 px-8 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold">
                 Start Earning Today
               </Button>

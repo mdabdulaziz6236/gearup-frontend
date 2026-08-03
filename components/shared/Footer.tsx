@@ -47,7 +47,7 @@ export default function Footer() {
             <h4 className="text-slate-900 dark:text-white font-bold mb-6 uppercase tracking-wider text-sm">Quick Links</h4>
             <ul className="space-y-4">
               <li>
-                <Link href="/gears" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm flex items-center group">
+                <Link href="/gear" className="text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors text-sm flex items-center group">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300">-</span> Browse Gear
                 </Link>
               </li>

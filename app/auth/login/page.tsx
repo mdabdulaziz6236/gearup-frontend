@@ -1,7 +1,24 @@
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import LoginForm from "../_components/LoginForm";
+import { Suspense } from "react";
 
+function LoginSkeleton() {
+  return (
+    <div className="space-y-4 animate-pulse">
+      <div className="p-5 space-y-3 rounded-xl border shadow-sm bg-white dark:bg-slate-950">
+        <div className="h-10 w-full bg-slate-200 dark:bg-slate-800 rounded-md"></div>
+        <div className="h-10 w-full bg-slate-200 dark:bg-slate-800 rounded-md"></div>
+        <div className="h-10 w-full bg-slate-300 dark:bg-slate-700 rounded-md flex items-center justify-center">
+          <Loader2 className="h-5 w-5 text-slate-500 animate-spin" />
+        </div>
+      </div>
+      <div className="flex justify-center mt-2">
+        <div className="h-4 w-48 bg-slate-200 dark:bg-slate-800 rounded"></div>
+      </div>
+    </div>
+  );
+}
 export default function LoginPage() {
   return (
     <>
@@ -15,8 +32,9 @@ export default function LoginPage() {
             </p>
           </div>
           {/* FORM */}
-
-          <LoginForm></LoginForm>
+          <Suspense fallback={<LoginSkeleton />}>
+            <LoginForm />
+          </Suspense>
           <div className="  text-center font-bold">
             <Link
               href="/"

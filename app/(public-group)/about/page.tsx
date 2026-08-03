@@ -139,12 +139,12 @@ export default function AboutPage() {
           Whether you want to rent gear for your next project or start earning money from your equipment, we're excited to have you on board.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link href="/gears">
+          <Link href="/gear">
             <Button className="h-14 px-8 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg w-full sm:w-auto">
               Explore Gears
             </Button>
           </Link>
-          <Link href="/register?role=PROVIDER">
+          <Link href="/auth/register">
             <Button variant="outline" className="h-14 px-8 rounded-xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold text-lg w-full sm:w-auto">
               Become a Provider <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
