@@ -11,6 +11,7 @@ import {
   User2Icon,
   Menu,
   ChevronRight,
+  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -39,9 +40,11 @@ import { toast } from "sonner";
 import { ModeToggle } from "../theme/toggleButton";
 import { logout } from "@/service/logout";
 
+
 const navLinks = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Gear", href: "/gear", icon: Boxes },
+  { label: "About-Us", href: "/about", icon: Users },
 ];
 
 const userMenuItems = [
