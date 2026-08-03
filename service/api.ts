@@ -700,6 +700,6 @@ export async function getAllReviews() {
   });
 
   const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Failed to change password");
+  if (!res.ok) throw new Error(data.message || "Failed to retrived reviews");
   return data;
 }

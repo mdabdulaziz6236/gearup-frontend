@@ -45,7 +45,7 @@ const MENU_ITEMS: Record<
       icon: ShoppingBag,
     },
     {
-      name: "My Rentals",
+      name: "My Orders",
       href: "/dashboard/customer/orders",
       icon: ClipboardList,
     },
@@ -132,7 +132,7 @@ export function Sidebar({ role }: SidebarProps) {
   const menus = MENU_ITEMS[role];
 
   return (
-    <aside className="flex h-full flex-col rounded-3xl bg-white p-4 shadow-sm">
+    <aside className="flex h-full flex-col rounded-3xl bg-sidebar-accent dark:bg-accent p-4 shadow-sm">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 px-2 py-4">
         <Boxes className="size-6 text-primary" />
